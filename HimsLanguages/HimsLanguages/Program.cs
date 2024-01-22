@@ -16,6 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<LanguagesRepo>();
 builder.Services.AddScoped<LanguagesService>();
+builder.Services.AddScoped<LocaleStringResourcesRepo>();
+builder.Services.AddScoped<LocaleStringResourcesService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();
 

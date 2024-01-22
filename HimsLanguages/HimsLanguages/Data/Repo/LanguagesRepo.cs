@@ -35,41 +35,61 @@ namespace HimsLanguages.Data.Repo
 
         {
             return await context.Languages
-                .FirstOrDefaultAsync(e => e.Id == id) ?? throw new Exception("id not found");
+                .FirstOrDefaultAsync(e => e.Id == id && e.IsDeleted== false)  ?? throw new Exception("id not found");
 
         }
-        
-        //public async Task<List<ActivityLog>> GetActivityLogByActivityLogTypeName(ActivityLogModel activityLog)
-        //{
-        //    var activityLogId = context.ActivityLogs
-        //       .Where(log => log.ActivityLogTypes. == activityLog)
-        //       .Select(log => log.LogId)
-        //       .FirstOrDefault();
-        //    return activityLogId;
 
-            //var result = new List<ActivityLog>();
 
-            //result = await context.ActivityLogs
-            //    .Where(x =>
-            //        (x. == activityLog.Id))
-            //    .ToListAsync();
 
-            //return result;
+        public async Task<string> UpdateLanguages(Languages languages)
+        {
+            //var result = await context.Languages
+            //    .FirstOrDefaultAsync(e => e.Id == languages.Id);
+            var result = await context.Languages
+                .FirstOrDefaultAsync(e => e.Id == languages.Id);
+
+            if (result != null)
+            {
+                result.Name = languages.Name;
+                result.LanguageCulture = languages.LanguageCulture;
+                var res = await context.SaveChangesAsync();
+                if (res > 0)
+                {
+
+                    return "updated ";
+                }
+                else
+                {
+                    throw new Exception("not updated");
+
+                }
+            }
+
+            throw new Exception("id not found");
+
         }
 
+        public async Task<string> DeleteLanguages(int id)
+        {
+            var language = await context.Languages.FindAsync(id);
+            if (language != null)
+            {
+                if (language.IsDeleted == true)
+                {
+                    return "already deleted";
+                }
+
+                //context.Countries.Remove(country);
+                language.IsDeleted = true;
+                await context.SaveChangesAsync();
+                language.DeletedAt = DateTime.Now;
+                return "deleted successfully";
+            }
+            throw new Exception("not deleted");
+        }
     }
+}
 
+      
 
-            //ActivityLog activityLog = context.ActivityLogs
-            //    .Where(al => al.ActivityLogType.Name == Name)
-            //    .FirstOrDefault();
-
-            //if (activityLog != null)
-            //{
-            //    return activityLog;
-            //}
-            //else
-            //{
-            //    // Handle the case where no log is found for the given type
-            //    throw new Exception("id not found");
            

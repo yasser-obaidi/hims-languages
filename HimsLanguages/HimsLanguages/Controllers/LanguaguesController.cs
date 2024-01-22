@@ -12,6 +12,8 @@ using System.Diagnostics.Metrics;
 
 namespace HimsLanguages.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class LanguaguesController : Controller
     {
         private readonly LanguagesRepo _Repo;
@@ -60,39 +62,36 @@ namespace HimsLanguages.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
 
-            //}
-            //[HttpPost("Update")]
-            //public async Task<IActionResult> UpdateCountry(Languages input)
-            //{
-            //    try
-            //    {
-            //        var res = await service.UpdateLanguages(input);
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update(Languages input)
+        {
+            try
+            {
+                var res = await service.UpdateLanguages(input);
 
-            //        return Ok(res);
+                return Ok(res);
 
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        return BadRequest(ex.Message);
-            //    }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
-            //}
-            //[HttpDelete("Delete")]
-            //public async Task<IActionResult> Delete(int input)
-            //{
-            //    try
-            //    {
-            //        return Ok(await service.DeleteLanguages(input));
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        return BadRequest(ex.Message);
-            //    }
+        }
 
-
-
-            //}
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete(int input)
+        {
+            try
+            {
+                return Ok(await service.DeleteLanguages(input));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

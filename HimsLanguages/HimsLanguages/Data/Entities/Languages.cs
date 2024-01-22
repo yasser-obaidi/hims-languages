@@ -1,6 +1,7 @@
 ﻿using HimsLanguages.Data.Entities;
 using HimsLanguages.Data.Entities.Commen;
 using System;
+using System.ComponentModel;
 
 namespace HimsLanguages.Data.Entities
 {
@@ -20,10 +21,13 @@ namespace HimsLanguages.Data.Entities
         public string FlagImageFileName { get; set; }
         public bool Rtl { get; set; }
         public bool Published { get; set; }
+        [DefaultValue(false)]
+        public bool IsDeleted { get; set; }
+        public ICollection<LocaleStringResources> LocaleStringResource { get; set; }
 
-      
-     
-      
+
+
+
 
 
     }

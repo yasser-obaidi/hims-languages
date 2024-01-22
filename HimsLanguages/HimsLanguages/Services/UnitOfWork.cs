@@ -11,7 +11,7 @@ namespace HimsLanguages.Services
     {
 
         public LanguagesRepo languagesRepo { get; }
-        
+        public LocaleStringResourcesRepo localeRepo { get; }
 
     }
 
@@ -20,13 +20,16 @@ namespace HimsLanguages.Services
     public class UnitOfWork : IUnitOfWork
     {
         public LanguagesRepo languagesRepo { get; }
+        public LocaleStringResourcesRepo localeRepo { get; }
 
         //LanguagesRepo IUnitOfWork.currencyRepo => throw new NotImplementedException();
 
-        public UnitOfWork(LanguagesRepo Repo)
+        public UnitOfWork(LanguagesRepo Repo, LocaleStringResourcesRepo _Repo)
         {
             languagesRepo = Repo;
-            
+            localeRepo=_Repo;
+
+
 
 
         }
