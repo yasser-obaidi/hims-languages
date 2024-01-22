@@ -62,10 +62,10 @@ namespace HimsLanguages.Services
             return res;
 
         }
-        //public async Task<string> DeleteLocale(int id)
-        //{
-        //    var res = await unit.localeRepo.DeleteLocale(id);
-        //    return res;
-      //  }
+        public async Task<string> DeleteLocale(int id)
+        {
+            var res = await unit.localeRepo.DeleteLocale(id);
+            return res;
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace HimsLanguages.Data.Repo
         {
             var result = await context.LocaleStringResource
                 .FirstOrDefaultAsync(e => e.Id == id 
-                //&& e.IsDeleted == false
+                && e.IsDeleted == false
                 );
 
             if (result != null)
@@ -40,7 +40,7 @@ namespace HimsLanguages.Data.Repo
         public async Task<string> UpdateLocale(LocaleStringResources locale)
         {
             var result = await context.LocaleStringResource
-                .FirstOrDefaultAsync(e => e.Id == locale.Id);
+                .FirstOrDefaultAsync(e => e.Id == locale.Id && e.IsDeleted == false);
 
             if (result != null)
             {
@@ -65,24 +65,22 @@ namespace HimsLanguages.Data.Repo
             throw new Exception("id not found");
 
         }
-        //public async Task<string> DeleteLocale(int id)
-        //{
-        //    var locale = await context.LocaleStringResource.FindAsync(id);
-        //    if (locale != null)
-        //    {
-        //        if (locale.IsDeleted == true)
-        //        {
-        //            return "already deleted";
-        //        }
-
-        //        //context.Countries.Remove(country);
-        //        locale.IsDeleted = true;
-        //        await context.SaveChangesAsync();
-        //        locale.DeletedAt = DateTime.Now;
-        //        return "deleted successfully";
-        //    }
-        //    throw new Exception("not deleted");
-        //}
+        public async Task<string> DeleteLocale(int id)
+        {
+            var locale = await context.LocaleStringResource.FindAsync(id);
+            if (locale != null)
+            {
+                if (locale.IsDeleted == true)
+                {
+                    return "already deleted";
+                }
+                locale.IsDeleted = true;
+                await context.SaveChangesAsync();
+                locale.DeletedAt = DateTime.Now;
+                return "deleted successfully";
+            }
+            throw new Exception("not deleted");
+        }
     }
     
     }

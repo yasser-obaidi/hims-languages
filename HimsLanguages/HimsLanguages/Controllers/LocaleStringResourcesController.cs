@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HimsLanguages.Data.Entities;
-using HimsLanguages.Data.Repo;
 using HimsLanguages.Data.Repo;
 using HimsLanguages.Services;
 using HimsLanguages.Data;
@@ -79,20 +77,20 @@ namespace HimsLanguages.Controllers
             }
 
         }
-        //[HttpDelete("Delete")]
-        //public async Task<IActionResult> Delete(int input)
-        //{
-        //    try
-        //    {
-        //        return Ok(await service.DeleteLocale(input));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete(int input)
+        {
+            try
+            {
+                return Ok(await service.DeleteLocale(input));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
 
 
-        //}
+        }
     }
     }

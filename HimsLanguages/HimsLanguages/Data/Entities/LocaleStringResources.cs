@@ -10,8 +10,8 @@ namespace HimsLanguages.Data.Entities
         public int Id { get; set; }
         public string ResourceName { get; set; }
         public string ResourceValue { get; set; }
-        //[DefaultValue(false)]
-        //public bool IsDeleted { get; set; }
+        [DefaultValue(false)]
+        public bool IsDeleted { get; set; }
         public int LanguagesId { get; set; }
 
 
