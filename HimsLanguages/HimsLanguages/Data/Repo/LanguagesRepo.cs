@@ -8,6 +8,7 @@ using HimsLanguages.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using HimsLanguages.Data;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace HimsLanguages.Data.Repo
 
@@ -16,9 +17,43 @@ namespace HimsLanguages.Data.Repo
 
     public class LanguagesRepo : Repository<Languages>
     {
-        public LanguagesRepo(Context context) : base(context)
-        {
+        private readonly IMemoryCache _cache;
 
+        public LanguagesRepo(Context context , IMemoryCache memoryCache) : base(context)
+        {
+            _cache=memoryCache;
+        }
+        public string GetLanguage(int id)
+        {
+            if (_cache.TryGetValue(id, out string value))
+            {
+                return value;
+            }
+            else
+            {
+                value = "string";
+                _cache.Set(id, value, new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60)
+                });
+                return value;
+            }
+        }
+        public IEnumerable<Languages> GetAllLanguages()
+        {
+            if (_cache.TryGetValue("languages", out IEnumerable<Languages> languages))
+            {
+                return languages;
+            }
+            else
+            {
+                languages = // get languages from database
+                _cache.Set("languages", languages, new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60)
+                });
+                return languages;
+            }
         }
         public async Task<Languages> Add(Languages input)
         {

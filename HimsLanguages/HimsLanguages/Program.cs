@@ -15,10 +15,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<LanguagesRepo>();
-builder.Services.AddScoped<LanguagesService>();
+builder.Services.AddScoped<ILanguagesService, LanguagesService>();
 builder.Services.AddScoped<LocaleStringResourcesRepo>();
 builder.Services.AddScoped<LocaleStringResourcesService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddMemoryCache();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
